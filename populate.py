@@ -75,7 +75,7 @@ def find_within_distance_and_color(session, lat, lon, distance, color, fetch_siz
 
 def find_within_distance_sorted(session, lat, lon, distance, fetch_size=20):
     # Find all points of color within a diameter of lat and lon
-    # not supported yet via CQL, need to use HTTP interface
+    # Not supported yet via CQL, need to use HTTP interface (DSP-5975)
     # http://localhost:8983/solr/geo.geo/select?wt=json&indent=true&fl=key,color&q=*:*&sfield=location&pt=37.7752,-122.4232&sort=geodist()%20asc&fl=_dist_:geodist(),key,color
     query = """SELECT * FROM %s.%s WHERE solr_query='{"q":"*:*", "fq":"+{!geofilt pt=%s,%s sfield=location d=%s}", "sort":"sort=geodist() asc"}';""" \
             % (KEYSPACE, COLUMN_FAMILY, lat, lon, distance)

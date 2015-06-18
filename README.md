@@ -2,8 +2,8 @@
 Simple little program to demonstrate geospatial search on DataStax Enterprise.
 
 ## Prerequisites
-1. DataStax Enterprise 4.7 or greater, with the ```bin``` directory in the ```PATH```
-1. The DataStax python driver
+1. [DataStax Enterprise](http://www.datastax.com/) 4.7 or greater, with the ```bin``` directory in the ```PATH```
+1. The DataStax [python driver](https://github.com/datastax/python-driver)
 1. The script assumes DSE is running in search mode on localhost.
 
 ### Sample Output
