@@ -77,8 +77,8 @@ def find_within_distance_sorted(session, lat, lon, distance, fetch_size=20):
     # Find all points of color within a diameter of lat and lon
     # Not supported yet via CQL, need to use HTTP interface (DSP-5975)
     # http://localhost:8983/solr/geo.geo/select?wt=json&indent=true&fl=key,color&q=*:*&sfield=location&pt=37.7752,-122.4232&sort=geodist()%20asc&fl=_dist_:geodist(),key,color
-    query = """SELECT * FROM %s.%s WHERE solr_query='{"q":"*:*", "fq":"+{!geofilt pt=%s,%s sfield=location d=%s}", "sort":"sort=geodist() asc"}';""" \
-            % (KEYSPACE, COLUMN_FAMILY, lat, lon, distance)
+    query = """SELECT * FROM %s.%s WHERE solr_query='{"q":"*:*", "fq":"+{!geofilt pt=%s,%s sfield=location d=%s}", "sort":"geodist(location,%s,%s) asc"}';""" \
+            % (KEYSPACE, COLUMN_FAMILY, lat, lon, distance, lat, lon)
     statement = SimpleStatement(query)
     statement.fetch_size = fetch_size
     return session.execute(statement)
@@ -176,6 +176,6 @@ if __name__ == '__main__':
     for i in limit_iterator(get_color_facets(session)):
         print(i)
 
-    # print(highlight("First 5 points within 50 of San Francisco sorted by distance"))
-    # for i in limit_iterator(find_within_distance_sorted(session, SF_LAT, SF_LON, 50)):
-    #     print(i)
+    print(highlight("First 5 points within 50 of San Francisco sorted by distance"))
+    for i in limit_iterator(find_within_distance_sorted(session, SF_LAT, SF_LON, 50)):
+        print(i)
